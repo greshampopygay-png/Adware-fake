@@ -9,38 +9,38 @@
 body{
     margin:0;
     overflow:hidden;
-    background:black;
+    background:#111;
     font-family:Arial;
 }
 
 .popup{
     position:absolute;
-    width:220px;
-    background:white;
-    border:3px solid red;
-    border-radius:10px;
-    padding:10px;
-    box-shadow:0 0 15px red;
-    animation: pop 0.2s ease;
-}
-
-.popup h3{
-    margin:0;
-    color:red;
+    width:240px;
+    min-height:120px;
+    border-radius:12px;
+    padding:12px;
+    color:white;
+    box-shadow:0 0 20px rgba(0,0,0,0.5);
+    animation:pop 0.2s ease;
 }
 
 .popup button{
     margin-top:10px;
     padding:8px 12px;
+    border:none;
+    border-radius:6px;
     cursor:pointer;
+    font-weight:bold;
 }
 
 @keyframes pop{
     from{
         transform:scale(0);
+        opacity:0;
     }
     to{
         transform:scale(1);
+        opacity:1;
     }
 }
 </style>
@@ -48,18 +48,62 @@ body{
 <body>
 
 <script>
+const ads = [
+{
+    title:"🎁 ВЫ ВЫИГРАЛИ IPHONE!",
+    text:"Нажмите чтобы забрать подарок!",
+    bg:"#ff3b30",
+    btn:"#ffffff"
+},
+{
+    title:"💰 ВАМ ДОСТУПЕН БОНУС",
+    text:"Получите 5000 монет прямо сейчас!",
+    bg:"#34c759",
+    btn:"#000000"
+},
+{
+    title:"⚡ СРОЧНОЕ ОБНОВЛЕНИЕ",
+    text:"Ваш браузер устарел!",
+    bg:"#007aff",
+    btn:"#ffffff"
+},
+{
+    title:"👑 VIP СТАТУС",
+    text:"Активируйте премиум бесплатно!",
+    bg:"#af52de",
+    btn:"#ffffff"
+},
+{
+    title:"🔥 СКИДКА 99%",
+    text:"Только 5 минут осталось!",
+    bg:"#ff9500",
+    btn:"#000000"
+},
+{
+    title:"🪙 БЕСПЛАТНЫЕ КРИСТАЛЛЫ",
+    text:"Игрок получил награду!",
+    bg:"#5ac8fa",
+    btn:"#000000"
+}
+];
+
 function createPopup(x, y){
+
+    const ad = ads[Math.floor(Math.random() * ads.length)];
 
     const popup = document.createElement("div");
     popup.className = "popup";
 
     popup.style.left = x + "px";
     popup.style.top = y + "px";
+    popup.style.background = ad.bg;
 
     popup.innerHTML = `
-        <h3>⚠ ВЫ ВЫИГРАЛИ!</h3>
-        <p>Нажмите кнопку чтобы получить приз!</p>
-        <button>Получить</button>
+        <h3>${ad.title}</h3>
+        <p>${ad.text}</p>
+        <button style="background:${ad.btn}">
+            Нажать
+        </button>
     `;
 
     const button = popup.querySelector("button");
@@ -68,8 +112,11 @@ function createPopup(x, y){
 
         for(let i = 0; i < 3; i++){
 
-            const randomX = Math.random() * (window.innerWidth - 240);
-            const randomY = Math.random() * (window.innerHeight - 160);
+            const randomX =
+                Math.random() * (window.innerWidth - 260);
+
+            const randomY =
+                Math.random() * (window.innerHeight - 180);
 
             createPopup(randomX, randomY);
         }
@@ -78,7 +125,7 @@ function createPopup(x, y){
     document.body.appendChild(popup);
 }
 
-createPopup(200, 150);
+createPopup(200,150);
 </script>
 
 </body>
